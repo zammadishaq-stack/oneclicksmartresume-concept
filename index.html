@@ -2215,7 +2215,20 @@
   html{scroll-behavior:auto}
   @media (prefers-reduced-motion: reduce){.fade-in,.slide-in,.spin,.page-enter,.slide-out,.pop-in,.backdrop-in,.backdrop-out{animation:none}}
 </style>
-</head>
+<style id="var-class-fix">
+.bg-\[var\(--color-primary\)\]{background-color:var(--color-primary)}
+.text-\[var\(--color-accent\)\]{color:var(--color-accent)}
+.text-\[var\(--color-text\)\]{color:var(--color-text)}
+.text-\[var\(--color-text-secondary\)\]{color:var(--color-text-secondary)}
+.focus\:ring-\[var\(--color-accent\)\]:focus{--tw-ring-color:var(--color-accent)}
+.via-\[var\(--color-secondary\)\]{--tw-gradient-via:var(--color-secondary);--tw-gradient-via-stops:var(--tw-gradient-position),var(--tw-gradient-from) var(--tw-gradient-from-position),var(--tw-gradient-via) var(--tw-gradient-via-position),var(--tw-gradient-to) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-via-stops)}
+.to-\[var\(--color-accent-light\)\]{--tw-gradient-to:var(--color-accent-light);--tw-gradient-stops:var(--tw-gradient-via-stops,var(--tw-gradient-position),var(--tw-gradient-from) var(--tw-gradient-from-position),var(--tw-gradient-to) var(--tw-gradient-to-position))}
+</style><style id="no-concept-bar">
+#pcbar{display:none!important}
+body.show-changes [data-change]{outline:none!important}
+body.show-changes [data-change]::after{display:none!important}
+footer::after{content:"Concept prototype prepared for a hiring assessment. Not the official OneClick Smart Resume website.";display:block;text-align:center;font-size:12px;color:#94a3b8;padding:12px 16px 0}
+</style></head>
 <body class="min-h-screen">
 
 <div id="app"></div>
@@ -3003,7 +3016,7 @@ function viewJob(){
               <ul class="space-y-2">${j.requirements.map(q=>`<li class="flex gap-2 text-gray-700">${done?(q.met?`<span class="w-5 h-5 rounded-full bg-green-100 text-green-700 flex items-center justify-center shrink-0">${icon('check','w-3 h-3')}</span>`:`<span class="w-5 h-5 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center shrink-0 text-xs font-bold">!</span>`):'<span class="text-gray-400">•</span>'}${esc(q.text)}</li>`).join('')}</ul>`
               : `<p class="mt-5 text-gray-700 leading-relaxed">${esc(j.company)}: ${esc(j.about)}. Growing team, hybrid-friendly culture and a focus on ${esc(j.tags[0] || 'customers')}.</p><p class="mt-3 text-sm text-gray-500">Company details are illustrative in this prototype.</p>`}
           </div></div>
-        ${done ? `<div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-5" data-change="Ask about this job (Jobright Orion pattern)"><div class="flex items-center gap-2 mb-3"><span class="text-violet-600">${icon('chat','w-5 h-5')}</span><p class="font-bold text-gray-900">Ask about this job</p><span class="text-xs text-gray-400">${aiReady()?'Answered by Claude':'Answered from your resume and this job'}</span></div>
+        ${done ? `<div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-5" data-change="Ask about this job"><div class="flex items-center gap-2 mb-3"><span class="text-violet-600">${icon('chat','w-5 h-5')}</span><p class="font-bold text-gray-900">Ask about this job</p><span class="text-xs text-gray-400">${aiReady()?'Answered by Claude':'Answered from your resume and this job'}</span></div>
           <div class="flex flex-wrap gap-2">${qs.map(q=>`<button data-ask="${esc(q)}" class="px-3 py-1.5 rounded-full border border-violet-200 bg-violet-50 text-violet-800 text-sm">${q}</button>`).join('')}</div>
           <div class="mt-3 flex gap-2"><input id="askInput" data-askinput="1" value="${esc(S.askDraft || '')}" placeholder="Ask anything about this job…" class="flex-1 px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:border-violet-400"><button data-act="asksend" class="px-4 rounded-xl bg-violet-600 text-white">${icon('send','w-4 h-4')}</button></div>
           ${S.ask.q?`<div class="mt-3 rounded-xl bg-slate-50 p-4"><p class="text-xs font-semibold text-gray-500">${esc(S.ask.q)}</p><p id="askAnswer" class="mt-1 text-sm text-gray-800 whitespace-pre-wrap">${S.ask.busy && !S.ask.a ? 'Thinking…' : esc(S.ask.a)}</p></div>`:''}</div>` : ''}
@@ -3237,7 +3250,7 @@ function modalChallenge(){
 const NOTES = {
   home:{t:'Homepage', items:[['P14','The main promise and one CTA come first; the tool list sits below.'],['P5','The 14-day trial is stated beside the CTA.'],['BENCH','Four-step path: upload → job fit → tailor + cover letter → apply & track.']]},
   hub:{t:'Talent Hub', items:[['REAL','Upload a real PDF, DOCX or TXT (or paste). In Claude, Claude reads it; elsewhere it’s analysed on the device.'],['REAL','Recommended jobs are generated from your resume: its roles, seniority, skills, industry and location.'],['P7','Every job shows a fit ring; "Why this match?" breaks it into Experience, Skills and Industry.'],['P6','"Tailor resume" on every card; once tailored it becomes "Apply with my kit".'],['BENCH','Recommended / Saved / Applied tabs with an application status tracker.'],['FLOW','Search and filters work (work model, level, minimum fit).'],['P5','Real trial status and one allowance (P8).']]},
-  job:{t:'Job page', items:[['BENCH','Job page with the fit breakdown and requirements checked against your resume.'],['BENCH','"Ask about this job" (Jobright’s Orion pattern), answered by Claude inside Claude.'],['BENCH','"Your application kit": tailored resume + cover letter + Apply.']]},
+  job:{t:'Job page', items:[['BENCH','Job page with the fit breakdown and requirements checked against your resume.'],['BENCH','"Ask about this job": questions about the role answered by AI, in context.'],['BENCH','"Your application kit": tailored resume + cover letter + Apply.']]},
   tailor:{t:'Tailor your resume', items:[['BENCH','3 steps: See your difference → Align your resume → Your new resume.'],['REAL','The rewrite uses your actual resume content; in Claude, Claude writes it under strict no-invention rules.'],['P6','Missing keywords are added only if you tick them.'],['P9','Stronger wording than your resume is flagged "needs your OK", with the safer choice pre-selected.'],['REAL','Download a real PDF of the tailored resume.']]},
   cover:{t:'Cover letter', items:[['BENCH','Choose tone, length and emphasis first; the letter streams in and is editable.'],['P8','Included with the tailored resume.'],['REAL','Copy, or download a real PDF.']]},
   apply:{t:'Apply', items:[['BENCH','Choose resume + cover letter, checklist, then apply.'],['P4','The 30-Day Challenge is offered only after the first application.'],['FLOW','Applied jobs get a status (Applied → Interviewing → Offer) and "Prepare interview".']]},
@@ -3251,8 +3264,8 @@ function renderNotes(){
   if (!S.notesOpen) { host.innerHTML = ''; return; }
   const n = NOTES[S.drawer || S.view] || NOTES.hub;
   host.innerHTML = `<div class="fixed right-4 bottom-16 z-[95] w-[380px] max-h-[70vh] overflow-y-auto rounded-2xl bg-white shadow-2xl border border-gray-200 p-5"><div class="flex items-center justify-between"><p class="text-xs font-bold uppercase tracking-widest text-gray-500">What changed · ${n.t}</p><button data-act="closenotes" aria-label="Close notes" class="text-gray-400">${icon('x','w-4 h-4')}</button></div>
-    <ul class="mt-3 space-y-3">${n.items.map(([p,t])=>`<li class="flex gap-2 text-sm text-gray-700"><span class="shrink-0 h-5 px-1.5 rounded ${p==='BENCH'?'bg-emerald-600':p==='REAL'?'bg-violet-600':p==='FLOW'?'bg-slate-400':'bg-blue-600'} text-white text-[10px] font-bold flex items-center">${p==='BENCH'?'JOBRIGHT':p}</span><span>${t}</span></li>`).join('')}</ul>
-    <p class="mt-4 text-[11px] text-gray-400">P-numbers = problems in the Onboarding Experience Review. JOBRIGHT = pattern from the Jobright.ai benchmark. REAL = works on your own resume.</p></div>`;
+    <ul class="mt-3 space-y-3">${n.items.map(([p,t])=>`<li class="flex gap-2 text-sm text-gray-700"><span class="shrink-0 h-5 px-1.5 rounded ${p==='BENCH'?'bg-emerald-600':p==='REAL'?'bg-violet-600':p==='FLOW'?'bg-slate-400':'bg-blue-600'} text-white text-[10px] font-bold flex items-center">${p==='BENCH'?'ADDED':p}</span><span>${t}</span></li>`).join('')}</ul>
+    <p class="mt-4 text-[11px] text-gray-400">P-numbers = problems in the Onboarding Experience Review. ADDED = new step added to the journey. REAL = works on your own resume.</p></div>`;
 }
 
 /* ================================================================
